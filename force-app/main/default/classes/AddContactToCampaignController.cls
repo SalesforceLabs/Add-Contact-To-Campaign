@@ -1,12 +1,3 @@
-Add Contact to Campaign Install Instructions
--------------------------------------------
-1. This application is for adding Contacts to Campaigns
-without using the Campaign History related list.
-2. After installation of the application,
-add the "Add Contact to Campaign" button
-to the Contact layout.
-
-
 /*
 Copyright (c) 2011, salesforce.com, Inc.
 All rights reserved.
@@ -35,3 +26,24 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+public with sharing class AddContactToCampaignController {
+    public Contact con { get; set; }
+    public CampaignMember cmem { get; set; }
+
+    public AddContactToCampaignController(
+        ApexPages.StandardController controller
+    ) {
+        con = (Contact) controller.getRecord();
+        cmem = new CampaignMember();
+    }
+
+    public PageReference save() {
+        cmem.ContactId = con.Id;
+        insert cmem;
+        return cancel();
+    }
+
+    public PageReference cancel() {
+        return new PageReference('/' + con.Id);
+    }
+}
