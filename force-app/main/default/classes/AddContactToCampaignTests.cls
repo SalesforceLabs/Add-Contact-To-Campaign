@@ -26,26 +26,41 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-public with sharing class AddContactToCampaignController {
-public Contact con {get;set;}
-public CampaignMember cmem {get;set;}
-   
-public AddContactToCampaignController(ApexPages.StandardController controller)
-{
-	con = (Contact)controller.getRecord();
-	cmem = new CampaignMember();
-}
+@isTest
+private class AddContactToCampaignTests {
+    static testMethod void addContactToCampaignTest() {
+        Account acc = new Account();
+        acc.BillingCountry = 'US';
+        acc.ShippingCountry = 'US';
+        acc.BillingState = 'IL';
+        acc.Name = 'Test Acc';
+        insert acc;
 
-public PageReference save()
-{
-	cmem.ContactId = con.Id;
-	insert cmem;
-	return cancel();
-}
+        Contact con = new Contact();
+        con.AccountId = acc.Id;
+        con.FirstName = 'Jane';
+        con.LastName = 'Doe';
+        insert con;
 
-public PageReference cancel()
-{
-	return new PageReference('/' + con.Id);
-}
+        Campaign cam1 = new Campaign();
+        cam1.Name = 'Test Cam 1';
+        insert cam1;
 
+        ApexPages.Standardcontroller con1 = new ApexPages.Standardcontroller(
+            con
+        );
+        AddContactToCampaignController actc = new AddContactToCampaignController(
+            con1
+        );
+        actc.cmem.CampaignId = cam1.Id;
+        actc.cmem.Status = 'Sent';
+        actc.save();
+
+        List<CampaignMember> camMems = [
+            SELECT Id
+            FROM CampaignMember
+            WHERE CampaignId = :cam1.Id
+        ];
+        System.assertEquals(1, camMems.size());
+    }
 }

@@ -1,0 +1,31 @@
+<apex:page
+    standardController="Contact"
+    extensions="AddContactToCampaignController"
+>
+    <apex:form>
+        <apex:pageBlock title="Add Contact as Campaign Member">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel for="camp" value="Campaign" />
+                    <apex:inputField
+                        value="{!cMem.CampaignId}"
+                        id="camp"
+                        required="true"
+                    />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel for="status" value="Status" />
+                    <apex:inputField
+                        value="{!cMem.Status}"
+                        id="status"
+                        required="true"
+                    />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Save" action="{!save}" />
+                <apex:commandButton value="Cancel" action="{!cancel}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>AddContactToCampaignController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddContactToCampaignTests</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Add Contact To Campaign</label>
+    <pageAccesses>
+        <apexPage>AddContactToCampaign</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>
